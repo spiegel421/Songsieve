@@ -35,7 +35,6 @@ def convert_to_npmi(count_matrix):
 
 # Auto-encodes NPMI matrix into 20 dimensions, using five-fold cross validation.
 def autoencode(npmi_matrix):
-  print npmi_matrix.index.values
   original_dim = len(npmi_matrix.values)
   encoding_dim = 20
   
@@ -54,7 +53,7 @@ def autoencode(npmi_matrix):
   autoencoder.fit(X, X, validation_split=0.2, 
                   epochs=50, batch_size=10)
   
-  encoded_space = encoder.predict(npmi_matrix.values)
+  encoded_space = pd.DataFrame(encoder.predict(npmi_matrix.values), index=npmi_matrix.index.values)
   return encoded_space
 
 # Determines the distance of each album from each tag's hyperplane.
@@ -66,7 +65,7 @@ def find_distance_matrix(count_matrix, encoded_space):
     y = copy.copy(count_matrix[:tag])
     print y.values
     y = [item / item if item > 0 else 0 for item in y.values[0]]
-    clf.fit(encoded_space, y)
-    distance_matrix[tag] = clf.decision_function(encoded_space)
+    clf.fit(encoded_space.values, y)
+    distance_matrix[tag] = clf.decision_function(encoded_space.values)
     
   return distance_matrix

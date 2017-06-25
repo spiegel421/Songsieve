@@ -1,5 +1,4 @@
 # Stores three tables: one for tags, one for album ratings, and one for song ratings.
-
 import mysql.connector
 from mysql.connector import errorcode
 

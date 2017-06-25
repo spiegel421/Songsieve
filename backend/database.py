@@ -139,16 +139,12 @@ def update_album_ratings(user, album, rating):
     exists = item[0]
   if exists == 0:
     cursor.execute(add_album_rating, data)
-    cursor.execute(check_rating_exists, data_short)
-    for item in cursor:
-      exists = item[0]
-      print exists
   else:
+    print 'achieved'
     cursor.execute(check_rating_same, data)
     for item in cursor:
       same = item[0]
     if same == 0:
-      print 'achieved'
       cursor.execute(change_album_rating, data_change)
   
   cursor.close()

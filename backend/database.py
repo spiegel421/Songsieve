@@ -65,7 +65,7 @@ cnx.close()
 
 # Allows users to update the album tags table.
 def update_album_tags(user, album, tag):
-  cnx = mysql.connector.connect(user='root', password='Reverie42')
+  cnx = mysql.connector.connect(user='root', password='Reverie42', buffered=True)
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
@@ -80,8 +80,6 @@ def update_album_tags(user, album, tag):
   data_album_tag = (user, album, tag)
   
   cursor.execute(check_exists, data_album_tag)
-  exists = cursor
-  cursor.close()
   cursor.execute(add_album_tag, data_album_tag)
   cnx.commit()
   

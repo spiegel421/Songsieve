@@ -69,9 +69,9 @@ def update_album_tags(user, album, tag):
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
-  check_exists = ("SELECT EXISTS(SELECT 1 "
-                          "FROM album_tags WHERE "
-                          "user = %s AND album = %s AND tag = %s); ")
+  check_exists = ("EXISTS(SELECT 1 "
+                  "FROM album_tags WHERE "
+                  "user = %s AND album = %s AND tag = %s); ")
   
   add_album_tag = ("INSERT INTO album_tags "
              "(user, album, tag) "

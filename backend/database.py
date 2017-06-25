@@ -92,6 +92,7 @@ def update_album_tags(user, album, tag):
 def read_album_tags():
   cnx = mysql.connector.connect(user='root', password='Reverie42', buffered=True)
   cursor = cnx.cursor()
+  cnx.database = DB_NAME
   
   cursor.execute("SELECT * FROM album_tags; ")
   for item in cursor:

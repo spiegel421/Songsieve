@@ -35,6 +35,7 @@ def convert_to_npmi(count_matrix):
 
 # Auto-encodes NPMI matrix into 20 dimensions, using five-fold cross validation.
 def autoencode(npmi_matrix):
+  print npmi_matrix.index.values
   original_dim = len(npmi_matrix.values)
   encoding_dim = 20
   
@@ -53,7 +54,7 @@ def autoencode(npmi_matrix):
   autoencoder.fit(X, X, validation_split=0.2, 
                   epochs=50, batch_size=10)
   
-  encoded_space = encoder.predict(npmi_matrix)
+  encoded_space = encoder.predict(npmi_matrix.values)
   return encoded_space
 
 # Determines the distance of each album from each tag's hyperplane.

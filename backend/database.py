@@ -11,7 +11,7 @@ TABLES['album_tags'] = (
   "user varchar(20) NOT NULL, "
   "album varchar(100) NOT NULL, "
   "tag varchar(20) NOT NULL, "
-  "PRIMARY KEY (user)); ")
+  "); ")
 
 # Same with rating albums: the user, album, and rating are stored.
 TABLES['album_ratings'] = (
@@ -19,7 +19,7 @@ TABLES['album_ratings'] = (
   "user varchar(20) NOT NULL, "
   "album varchar(100) NOT NULL, "
   "rating int(2) NOT NULL, "
-  "PRIMARY KEY (user)); ")
+  "); ")
 
 # Same as above, only with songs, not albums.
 TABLES['song_ratings'] = (
@@ -27,7 +27,7 @@ TABLES['song_ratings'] = (
   "user varchar(20) NOT NULL, "
   "song varchar(100) NOT NULL, "
   "rating int(2) NOT NULL, "
-  "PRIMARY KEY (user)); ")
+  "); ")
 
 # Connects to mysql, defines a method for creating the database, and uses that method.
 cnx = mysql.connector.connect(user='root', password='Reverie42')

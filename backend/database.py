@@ -120,7 +120,7 @@ def update_album_ratings(user, album, rating):
   
   check_rating_same =("SELECT EXISTS(SELECT 1 FROM "
                       "album_ratings WHERE user = %s "
-                      "AND album = %s AND tag = %s); ")
+                      "AND album = %s AND rating = %s); ")
   
   add_album_rating = ("INSERT INTO album_ratings "
              "(user, album, rating) "

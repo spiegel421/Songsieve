@@ -203,7 +203,6 @@ def update_song_ratings(user, song, rating):
   if exists == 0:
     cursor.execute(add_song_rating, data)
   else:
-    print 'achieved'
     cursor.execute(check_rating_same, data)
     for item in cursor:
       same = item[0]

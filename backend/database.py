@@ -94,9 +94,16 @@ def read_album_tags():
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
+  album_tag_dict = dict()
+  
   cursor.execute("SELECT * FROM album_tags; ")
   for item in cursor:
-    print item[0]
+    if (item[1], item[2]) in album_tag_dict:
+      album_tag_dict[(item[1], item[2])] += 1
+    else:
+      album_tag_dict[(item[1], item[2])] = 0
+      
+  print album_tag_dict
     
   cursor.close()
   cnx.close()

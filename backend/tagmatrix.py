@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd
 import copy
+from keras.models import Sequential
 
 # Converts dictionaries to labeled matrices, using pandas's DataFrame class.
 def convert_to_matrix(album_tag_dict):

@@ -96,7 +96,7 @@ def read_album_tags():
   
   cursor.execute("SELECT * FROM album_tags; ")
   for item in cursor:
-    print item
+    print item[0]
     
   cursor.close()
   cnx.close()

@@ -8,4 +8,6 @@ update_album_ratings('1', '2', 6)
 update_album_ratings('1', '2', 5)
 update_song_ratings('1', '4', 3)
 update_song_ratings('1', '4', 9)
-print convert_to_npmi(convert_to_matrix(read_album_tags()))
+matrix = convert_to_matrix(read_album_tags())
+print matrix
+print convert_to_npmi(matrix)

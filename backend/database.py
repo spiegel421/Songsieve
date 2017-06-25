@@ -66,7 +66,7 @@ for name, ddl in TABLES.iteritems():
 cursor.close()
 cnx.close()
 
-# Allows users to update the tags table.
+# Allows users to update the album tags table.
 def update_album_tags(user, album, tag):
   cnx = mysql.connector.connect(user='root', password='Reverie42')
   cursor = cnx.cursor()

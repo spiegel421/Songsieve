@@ -6,8 +6,8 @@ DB_NAME = 'tags_ratings'
 
 TABLES = {}
 # Every time a user tags an album, the user, album, and tag are stored.
-TABLES['tags'] = (
-  "CREATE TABLE tags( "
+TABLES['album_tags'] = (
+  "CREATE TABLE album_tags( "
   "user varchar(20) NOT NULL, "
   "album varchar(100) NOT NULL, "
   "tag varchar(20) NOT NULL, "
@@ -67,18 +67,18 @@ cursor.close()
 cnx.close()
 
 # Allows users to update the tags table.
-def update_tags(user, album, tag):
+def update_album_tags(user, album, tag):
   cnx = mysql.connector.connect(user='root', password='Reverie42')
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
-  add_tag = ("INSERT INTO tags "
+  add_album_tag = ("INSERT INTO album_tags "
              "(user, album, tag) "
              "VALUES (%s, %s, %s); ")
   
-  data_tag = (user, album, tag)
+  data_album_tag = (user, album, tag)
   
-  cursor.execute(add_tag, data_tag)
+  cursor.execute(add_album_tag, data_album_tag)
   cnx.commit()
   
   cursor.close()

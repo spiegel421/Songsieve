@@ -80,7 +80,7 @@ def update_album_tags(user, album, tag):
   data_album_tag = (user, album, tag)
   
   cursor.execute(check_exists, data_album_tag)
-  if cursor[0][0] == 0:
+  if cursor == 0:
     cursor.execute(add_album_tag, data_album_tag)
   cnx.commit()
   

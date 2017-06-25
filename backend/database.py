@@ -95,13 +95,21 @@ def update_album_ratings(user, album, rating):
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
+  check_exists = ("SELECT EXISTS(SELECT 1 FROM "
+                  "album_ratings WHERE user = %s "
+                  "AND album = %s AND rating = %s); ")
+  
   add_album_rating = ("INSERT INTO album_ratings "
              "(user, album, rating) "
              "VALUES (%s, %s, %s); ")
   
   data_album_rating = (user, album, rating)
   
-  cursor.execute(add_album_rating, data_album_rating)
+  cursor.execute(check_exists, data_album_rating)
+  for item in cursor:
+    exists = item[0]
+  if exists == 0:
+    cursor.execute(add_album_rating, data_album_rating)
   cnx.commit()
   
   cursor.close()
@@ -113,13 +121,21 @@ def update_song_ratings(user, song, rating):
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
+  check_exists = ("SELECT EXISTS(SELECT 1 FROM "
+                  "song_ratings WHERE user = %s "
+                  "AND song = %s AND rating = %s); ")
+  
   add_song_rating = ("INSERT INTO song_ratings "
              "(user, song, rating) "
              "VALUES (%s, %s, %s); ")
   
-  data_song_rating = (user, song, rating)
+  data_album_rating = (user, song, rating)
   
-  cursor.execute(add_song_rating, data_song_rating)
+  cursor.execute(check_exists, data_song_rating)
+  for item in cursor:
+    exists = item[0]
+  if exists == 0:
+    cursor.execute(add_song_rating, data_song_rating)
   cnx.commit()
   
   cursor.close()

@@ -1,4 +1,4 @@
-# Establishes, in binary fashion, whether each album has each tag based on PMI values and auto-encoding.
+# Establishes, in binary fashion, whether each album has each tag based on PMI values and autoencoding.
 import numpy as np
 import pandas as pd
 import copy

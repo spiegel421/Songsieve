@@ -4,6 +4,7 @@ import pandas as pd
 import copy
 from keras.layers import Input, Dense
 from keras.models import Model
+from sklearn import svm
 
 # Converts dictionaries to labeled matrices, using pandas's DataFrame class.
 def convert_to_matrix(album_tag_dict):
@@ -54,3 +55,14 @@ def autoencode(npmi_matrix):
   
   encoded_space = encoder.predict(npmi_matrix.values)
   return encoded_space
+
+# Determines the distance of each album from each tag's hyperplane.
+def find_distance_matrix(count_matrix, encoded_space):
+  distance_matrix = copy.copy(count_matrix).T
+  
+  clf = svm.LinearSVC()
+  for tag in count_matrix.columns.values():
+    y = copy.copy(count_matrix[:tag])
+    y = [item / item if item > 0 else 0 for item in y]
+    clf.fit(encoded_space, y)
+    distance_matrix[tag] = clf.decision_function(encoded_space)

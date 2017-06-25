@@ -22,8 +22,8 @@ def convert_to_npmi(count_matrix):
           npmi_matrix.values[row][col] = 1.0
           continue
         else:
-          prob_row = entry / count_matrix.values.sum(axis=0)
-          prob_col = entry / count_matrix.values.sum(axis=1)
+          prob_row = entry / count_matrix.values.sum(axis=0)[row]
+          prob_col = entry / count_matrix.values.sum(axis=1)[col]
           npmi_value = -1.0 * np.log(prob_con / (prob_row * prob_col)) / np.log(prob_con)
           npmi_matrix.values[row][col] = npmi_value
           

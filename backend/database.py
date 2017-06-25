@@ -71,6 +71,7 @@ cnx.close()
 def update_tags(userid, albumid, tagid):
   cnx = mysql.connector.connect(user='root', password='Reverie42')
   cursor = cnx.cursor()
+  cnx.database = DB_NAME
   
   add_tag = ("INSERT INTO tags "
              "(user, album, tag) "

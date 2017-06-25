@@ -66,3 +66,20 @@ for name, ddl in TABLES.iteritems():
 
 cursor.close()
 cnx.close()
+
+# Allows users to update the tags table.
+def update_tags(userid, albumid, tagid):
+  cnx = mysql.connector.connect(user='root', password='Reverie42')
+  cursor = cnx.cursor()
+  
+  add_tag = ("INSERT INTO tags "
+             "(user, album, tag) "
+             "VALUES (%s, %s, %s); ")
+  
+  data_tag = (userid, albumid, tagid)
+  
+  cursor.execute(add_tag, data_tag)
+  cnx.commit()
+  
+  cursor.close()
+  cnx.close()

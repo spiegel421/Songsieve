@@ -69,16 +69,13 @@ def update_album_tags(user, album, tag):
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
-  add_album_tag = ("INSERT INTO album_tags "
+  add_album_tag = ("REPLACE INTO album_tags "
              "(user, album, tag) "
-             "VALUES (%s, %s, %s) "
-             "WHERE NOT EXISTS (SELECT * FROM "
-             "album_tags WHERE user = %s AND "
-             "album = %s AND tag = %s); ")
+             "VALUES (%s, %s, %s); ")
   
   data_album_tag = (user, album, tag)
   
-  cursor.execute(add_album_tag, data_album_tag, data_album_tag)
+  cursor.execute(add_album_tag, data_album_tag)
   cnx.commit()
   
   cursor.close()

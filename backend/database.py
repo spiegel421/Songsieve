@@ -78,7 +78,7 @@ def update_album_tags(user, album, tag):
   
   data_album_tag = (user, album, tag)
   
-  cursor.execute(add_album_tag, data_album_tag)
+  cursor.execute(add_album_tag, data_album_tag, data_album_tag)
   cnx.commit()
   
   cursor.close()

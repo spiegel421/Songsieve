@@ -60,6 +60,7 @@ for name, ddl in TABLES.iteritems():
     else:
         print "OK"
 
+cnx.commit()
 cursor.close()
 cnx.close()
 
@@ -85,6 +86,7 @@ def update_album_tags(user, album, tag):
   if exists == 0:
     cursor.execute(add_album_tag, data)
   
+  cnx.commit()
   cursor.close()
   cnx.close()
   
@@ -147,6 +149,7 @@ def update_album_ratings(user, album, rating):
     if same == 0:
       cursor.execute(change_album_rating, data_change)
   
+  cnx.commit()
   cursor.close()
   cnx.close()
   
@@ -178,5 +181,6 @@ def update_song_ratings(user, song, rating):
   if exists == 0:
     cursor.execute(add_song_rating, data_song_rating)
   
+  cnx.commit()
   cursor.close()
   cnx.close()

@@ -91,7 +91,7 @@ def update_album_tags(user, album, tag):
 
 # Allows users to update the album ratings table.
 def update_album_ratings(user, album, rating):
-  cnx = mysql.connector.connect(user='root', password='Reverie42')
+  cnx = mysql.connector.connect(user='root', password='Reverie42', buffered=True)
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
@@ -117,7 +117,7 @@ def update_album_ratings(user, album, rating):
   
 # Allows users to update the song ratings table.
 def update_song_ratings(user, song, rating):
-  cnx = mysql.connector.connect(user='root', password='Reverie42')
+  cnx = mysql.connector.connect(user='root', password='Reverie42', buffered=True)
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   

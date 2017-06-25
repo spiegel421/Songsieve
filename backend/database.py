@@ -88,7 +88,16 @@ def update_album_tags(user, album, tag):
   
   cursor.close()
   cnx.close()
-
+  
+# Reads the album tags table into a matrix.
+def read_album_tags():
+  cnx = mysql.connector.connect(user='root', password='Reverie42', buffered=True)
+  cursor = cnx.cursor()
+  
+  cursor.execute("SELECT * FROM album_tags; ")
+  for item in cursor:
+    print item
+  
 # Allows users to update the album ratings table.
 def update_album_ratings(user, album, rating):
   cnx = mysql.connector.connect(user='root', password='Reverie42', buffered=True)

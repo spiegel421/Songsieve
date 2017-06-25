@@ -70,8 +70,9 @@ def update_album_tags(user, album, tag):
   cnx.database = DB_NAME
   
   add_album_tag = ("REPLACE INTO album_tags "
-             "(user, album, tag) "
-             "VALUES (%s, %s, %s); ")
+             "SET user = %s, "
+             "album = %s, "
+             "tag = %s; ")
   
   data_album_tag = (user, album, tag)
   

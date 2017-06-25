@@ -77,13 +77,13 @@ def update_album_tags(user, album, tag):
              "(user, album, tag) "
              "VALUES (%s, %s, %s); ")
   
-  data_album_tag = (user, album, tag)
+  data = (user, album, tag)
   
-  cursor.execute(check_exists, data_album_tag)
+  cursor.execute(check_exists, data)
   for item in cursor:
     exists = item[0]
   if exists == 0:
-    cursor.execute(add_album_tag, data_album_tag)
+    cursor.execute(add_album_tag, data)
   
   cursor.close()
   cnx.close()
@@ -114,11 +114,11 @@ def update_album_ratings(user, album, rating):
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
-  check_rating_exists = ("SELECT EXISTS(SELECT 1 FROM "
+  check_rating_exists = ("SELECT EXISTS(SELECT * FROM "
                   "album_ratings WHERE user = %s "
                   "AND album = %s); ")
   
-  check_rating_same =("SELECT EXISTS(SELECT 1 FROM "
+  check_rating_same =("SELECT EXISTS(SELECT * FROM "
                       "album_ratings WHERE user = %s "
                       "AND album = %s AND rating = %s); ")
   
@@ -137,7 +137,6 @@ def update_album_ratings(user, album, rating):
   cursor.execute(check_rating_exists, data_short)
   for item in cursor:
     exists = item[0]
-  print exists
   if exists == 0:
     cursor.execute(add_album_rating, data)
   else:

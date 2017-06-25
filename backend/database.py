@@ -96,6 +96,9 @@ def read_album_tags():
   cursor.execute("SELECT * FROM album_tags; ")
   for item in cursor:
     print item
+    
+  cursor.close()
+  cnx.close()
   
 # Allows users to update the album ratings table.
 def update_album_ratings(user, album, rating):
@@ -118,7 +121,6 @@ def update_album_ratings(user, album, rating):
     exists = item[0]
   if exists == 0:
     cursor.execute(add_album_rating, data_album_rating)
-  cnx.commit()
   
   cursor.close()
   cnx.close()
@@ -144,7 +146,6 @@ def update_song_ratings(user, song, rating):
     exists = item[0]
   if exists == 0:
     cursor.execute(add_song_rating, data_song_rating)
-  cnx.commit()
   
   cursor.close()
   cnx.close()

@@ -130,13 +130,14 @@ def update_album_ratings(user, album, rating):
                          "SET rating = %s "
                          "WHERE user = %s AND album = %s; ")
   
-  data_short = (user, album)
   data = (user, album, rating)
+  data_short = (user, album)
   data_change = (rating, user, album)
   
   cursor.execute(check_rating_exists, data_short)
   for item in cursor:
     exists = item[0]
+  print exists
   if exists == 0:
     cursor.execute(add_album_rating, data)
   else:

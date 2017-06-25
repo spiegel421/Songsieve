@@ -34,9 +34,9 @@ def create_database(cursor):
   try:
     cursor.execute(
             "CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8'".format(DB_NAME))
-    except mysql.connector.Error as err:
-        print("Failed creating database: {}".format(err))
-        exit(1)
+  except mysql.connector.Error as err:
+     print("Failed creating database: {}".format(err))
+     exit(1)
 
 try:
     cnx.database = DB_NAME  

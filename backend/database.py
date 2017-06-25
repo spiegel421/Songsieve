@@ -103,7 +103,7 @@ def read_album_tags():
     if (item[1], item[2]) in album_tag_dict:
       album_tag_dict[(item[1], item[2])] += 1
     else:
-      album_tag_dict[(item[1], item[2])] = 0
+      album_tag_dict[(item[1], item[2])] = 1
   
   cnx.commit()
   cursor.close()

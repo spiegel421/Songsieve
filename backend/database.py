@@ -70,6 +70,7 @@ def update_album_tags(user, album, tag):
   cnx.database = DB_NAME
   
   add_album_tag = ("INSERT IGNORE INTO album_tags "
+             "(user, album, tag) "
              "VALUES (%s, %s, %s); ")
   
   data_album_tag = (user, album, tag)

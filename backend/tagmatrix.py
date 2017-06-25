@@ -2,7 +2,8 @@
 import numpy as np
 import pandas as pd
 import copy
-from keras.models import Sequential
+from keras.layers import Input, Dense
+from keras.models import Model
 
 # Converts dictionaries to labeled matrices, using pandas's DataFrame class.
 def convert_to_matrix(album_tag_dict):
@@ -30,3 +31,26 @@ def convert_to_npmi(count_matrix):
           npmi_matrix.values[row][col] = npmi_value
           
   return npmi_matrix
+
+# Auto-encodes NPMI matrix into 20 dimensions, using five-fold cross validation.
+def autoencode(npmi_matrix):
+  original_dim = len(npmi_matrix.values)
+  encoding_dim = 20
+  
+  input = Input(shape=(original_dim,))
+  encoded = Dense(encoding_dim, activation='tanh')(input)
+  decoded = Dense(original_dim, activation='tanh')(encoded)
+  
+  autoencoder = Model(input, decoded)
+  encoder = Model(input, encoded)
+  encoded_input = Input(shape=(encoding_dim,))
+  decoder_layer = autoencoder.layers[-1]
+  decoder = Model(encoded_input, decoder_layer(encoded_input))
+  
+  X = npmi_matrix.values
+  autoencoder.compile(optimizer='sgd', loss='mean_squared_error')
+  autoencoder.fit(X, X, validation_split=0.2, 
+                  epochs=50, batch_size=10)
+  
+  encoded_space = encoder.predict(npmi_matrix.values)
+  return encoded_space

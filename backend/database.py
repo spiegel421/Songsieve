@@ -76,7 +76,7 @@ def update_album_tags(user, album, tag):
              "album_tags WHERE user = %s AND "
              "album = %s AND tag = %s); ")
   
-  data_album_tag = (user, album, tag, user, album, tag)
+  data_album_tag = (user, album, tag)
   
   cursor.execute(add_album_tag, data_album_tag)
   cnx.commit()

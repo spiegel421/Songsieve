@@ -71,7 +71,7 @@ def update_album_tags(user, album, tag):
   
   check_exists = ("SELECT EXISTS(SELECT 1 "
                           "FROM album_tags WHERE "
-                          "user = %s AND album = %s AND tag = %s) ")
+                          "user = %s AND album = %s AND tag = %s); ")
   
   add_album_tag = ("INSERT INTO album_tags "
              "(user, album, tag) "
@@ -79,9 +79,9 @@ def update_album_tags(user, album, tag):
   
   data_album_tag = (user, album, tag)
   
-  #cursor.execute(check_exists, data_album_tag)
-  cursor.execute(add_album_tag, data_album_tag)
-  cnx.commit()
+  if cursor.execute(check_exists, data_album_tag) == 1:
+    cursor.execute(add_album_tag, data_album_tag)
+    cnx.commit()
   
   cursor.close()
   cnx.close()

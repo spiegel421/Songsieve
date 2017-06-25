@@ -137,7 +137,7 @@ def update_song_ratings(user, song, rating):
              "(user, song, rating) "
              "VALUES (%s, %s, %s); ")
   
-  data_album_rating = (user, song, rating)
+  data_song_rating = (user, song, rating)
   
   cursor.execute(check_exists, data_song_rating)
   for item in cursor:

@@ -96,14 +96,18 @@ def read_album_tags():
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
-  album_tag_dict = dict()
+  album_tag_dict = {}
   
   cursor.execute("SELECT * FROM album_tags; ")
   for item in cursor:
-    if (item[1], item[2]) in album_tag_dict:
-      album_tag_dict[(item[1], item[2])] += 1
+    if item[1] in album_tag_dict:
+      if item[2] in album_tag_dict[item[1]]:
+        album_tag_dict[item[1]][item[2]] += 1
+      else:
+        album_tag_dict[item[1]][item[2]] = 1
     else:
-      album_tag_dict[(item[1], item[2])] = 1
+      album_tag_dict[item[1]] = {}
+      album_tag_dict[item[1]][item[2]] = 1
   
   cnx.commit()
   cursor.close()
@@ -159,11 +163,13 @@ def read_album_ratings():
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
-  album_rating_dict = dict()
+  album_rating_dict = {}
   
   cursor.execute("SELECT * FROM album_ratings; ")
   for item in cursor:
-    album_rating_dict[(item[0], item[1])] = item[2]
+    if item[0] not in album_rating_dict:
+      album_rating_dict[item[0]] = {}
+    album_rating_dict[item[0]][item[1]] = item[2]
     
   cnx.commit()
   cursor.close()
@@ -223,7 +229,9 @@ def read_song_ratings():
   
   cursor.execute("SELECT * FROM song_ratings; ")
   for item in cursor:
-    song_rating_dict[(item[0], item[1])] = item[2]
+    if item[0] not in song_rating_dict:
+      song_rating_dict[item[0]] = {}
+    song_rating_dict[item[0]][item[1]] = item[2]
     
   cnx.commit()
   cursor.close()

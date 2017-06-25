@@ -88,7 +88,7 @@ def update_album_tags(user, album, tag):
   cursor.close()
   cnx.close()
   
-# Reads the album tags table into a matrix.
+# Reads the album tags table into a dictionary.
 def read_album_tags():
   cnx = mysql.connector.connect(user='root', password='Reverie42', buffered=True)
   cursor = cnx.cursor()
@@ -102,11 +102,11 @@ def read_album_tags():
       album_tag_dict[(item[1], item[2])] += 1
     else:
       album_tag_dict[(item[1], item[2])] = 0
-      
-  print album_tag_dict
     
   cursor.close()
   cnx.close()
+  
+  return album_tag_dict
   
 # Allows users to update the album ratings table.
 def update_album_ratings(user, album, rating):
@@ -114,24 +114,46 @@ def update_album_ratings(user, album, rating):
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
-  check_exists = ("SELECT EXISTS(SELECT 1 FROM "
+  check_rating_exists = ("SELECT EXISTS(SELECT 1 FROM "
                   "album_ratings WHERE user = %s "
-                  "AND album = %s AND rating = %s); ")
+                  "AND album = %s); ")
+  
+  check_rating_same =("SELECT EXISTS(SELECT 1 FROM "
+                      "album_ratings WHERE user = %s "
+                      "AND album = %s AND tag = %s); ")
   
   add_album_rating = ("INSERT INTO album_ratings "
              "(user, album, rating) "
              "VALUES (%s, %s, %s); ")
   
-  data_album_rating = (user, album, rating)
+  change_album_rating = ("UPDATE album_ratings "
+                         "SET rating = %s"
+                         "WHERE user = %s AND album = %s; ")
   
-  cursor.execute(check_exists, data_album_rating)
+  data_short = (user, album)
+  data = (user, album, rating)
+  data_change = (rating, user, album)
+  
+  cursor.execute(check_rating_exists, data_short)
   for item in cursor:
     exists = item[0]
   if exists == 0:
-    cursor.execute(add_album_rating, data_album_rating)
+    cursor.execute(add_album_rating, data)
+  else:
+    cursor.execute(check_rating_same, data)
+    for item in cursor:
+      same = item[0]
+    if same == 0:
+      cursor.execute(change_album_rating, data_change)
   
   cursor.close()
   cnx.close()
+  
+# Reads the album ratings table into a dictionary.
+def read_album_ratings():
+  cnx = mysql.connector.connect(user='root', password='Reverie42', buffered=True)
+  cursor = cnx.cursor()
+  cnx.database = DB_NAME
   
 # Allows users to update the song ratings table.
 def update_song_ratings(user, song, rating):

@@ -12,7 +12,7 @@ def convert_to_npmi(count_matrix):
   
   for row in count_matrix:
     for col in count_matrix:
-      entry = double(count_matrix[row][col])
+      entry = float(count_matrix[row][col])
       if entry == 0:
         npmi_matrix[row][col] = -1.0
         continue

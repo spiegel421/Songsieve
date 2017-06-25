@@ -7,11 +7,11 @@ DB_NAME = 'tags_ratings'
 
 TABLES = {}
 TABLES['tags'] = (
-  "CREATE TABLE 'tags'( "
-  "'user' varchar(20) NOT NULL, "
-  "'album' varchar(100) NOT NULL, "
-  "'tag' varchar(20) NOT NULL, "
-  "PRIMARY KEY ('user')); ")
+  "CREATE TABLE tags( "
+  "user varchar(20) NOT NULL, "
+  "album varchar(100) NOT NULL, "
+  "tag varchar(20) NOT NULL, "
+  "PRIMARY KEY (user)); ")
 
 TABLES['album_ratings'] = (
   "CREATE TABLE 'album_ratings'( "

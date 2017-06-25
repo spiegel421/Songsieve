@@ -121,7 +121,7 @@ def update_album_ratings(user, album, rating):
                   "album_ratings WHERE user = %s "
                   "AND album = %s); ")
   
-  check_rating_same =("SELECT EXISTS(SELECT * FROM "
+  check_rating_same = ("SELECT EXISTS(SELECT * FROM "
                       "album_ratings WHERE user = %s "
                       "AND album = %s AND rating = %s); ")
   
@@ -181,7 +181,7 @@ def update_song_ratings(user, song, rating):
                   "song_ratings WHERE user = %s "
                   "AND song = %s); ")
   
-  check_rating_same =("SELECT EXISTS(SELECT * FROM "
+  check_rating_same = ("SELECT EXISTS(SELECT * FROM "
                       "song_ratings WHERE user = %s "
                       "AND song = %s AND rating = %s); ")
   

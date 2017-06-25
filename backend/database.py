@@ -143,7 +143,6 @@ def update_album_ratings(user, album, rating):
   if exists == 0:
     cursor.execute(add_album_rating, data)
   else:
-    print 'achieved'
     cursor.execute(check_rating_same, data)
     for item in cursor:
       same = item[0]
@@ -159,6 +158,18 @@ def read_album_ratings():
   cnx = mysql.connector.connect(user='root', password='Reverie42', buffered=True)
   cursor = cnx.cursor()
   cnx.database = DB_NAME
+  
+  album_rating_dict = dict()
+  
+  cursor.execute("SELECT * FROM album_ratings; ")
+  for item in cursor:
+    album_rating_dict[(item[0], item[1])] = item[2]
+    
+  cnx.commit()
+  cursor.close()
+  cnx.close()
+  
+  return album_rating_dict
   
 # Allows users to update the song ratings table.
 def update_song_ratings(user, song, rating):
@@ -202,3 +213,21 @@ def update_song_ratings(user, song, rating):
   cnx.commit()
   cursor.close()
   cnx.close()
+  
+# Reads the song ratings table into a dictionary.
+def read_song_ratings():
+  cnx = mysql.connector.connect(user='root', password='Reverie42', buffered=True)
+  cursor = cnx.cursor()
+  cnx.database = DB_NAME
+  
+  song_rating_dict = dict()
+  
+  cursor.execute("SELECT * FROM song_ratings; ")
+  for item in cursor:
+    song_rating_dict[(item[0], item[1])] = item[2]
+    
+  cnx.commit()
+  cursor.close()
+  cnx.close()
+  
+  return song_rating_dict

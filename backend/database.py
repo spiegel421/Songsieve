@@ -104,7 +104,8 @@ def read_album_tags():
       album_tag_dict[(item[1], item[2])] += 1
     else:
       album_tag_dict[(item[1], item[2])] = 0
-    
+  
+  cnx.commit()
   cursor.close()
   cnx.close()
   
@@ -165,21 +166,38 @@ def update_song_ratings(user, song, rating):
   cursor = cnx.cursor()
   cnx.database = DB_NAME
   
-  check_exists = ("SELECT EXISTS(SELECT 1 FROM "
+  check_rating_exists = ("SELECT EXISTS(SELECT * FROM "
                   "song_ratings WHERE user = %s "
-                  "AND song = %s AND rating = %s); ")
+                  "AND song = %s); ")
+  
+  check_rating_same =("SELECT EXISTS(SELECT * FROM "
+                      "song_ratings WHERE user = %s "
+                      "AND song = %s AND rating = %s); ")
   
   add_song_rating = ("INSERT INTO song_ratings "
              "(user, song, rating) "
              "VALUES (%s, %s, %s); ")
   
-  data_song_rating = (user, song, rating)
+  change_song_rating = ("UPDATE song_ratings "
+                         "SET rating = %s "
+                         "WHERE user = %s AND song = %s; ")
   
-  cursor.execute(check_exists, data_song_rating)
+  data = (user, song, rating)
+  data_short = (user, song)
+  data_change = (rating, user, song)
+  
+  cursor.execute(check_rating_exists, data_short)
   for item in cursor:
     exists = item[0]
   if exists == 0:
-    cursor.execute(add_song_rating, data_song_rating)
+    cursor.execute(add_song_rating, data)
+  else:
+    print 'achieved'
+    cursor.execute(check_rating_same, data)
+    for item in cursor:
+      same = item[0]
+    if same == 0:
+      cursor.execute(change_song_rating, data_change)
   
   cnx.commit()
   cursor.close()

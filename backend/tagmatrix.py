@@ -1,6 +1,7 @@
 # Establishes, in binary fashion, whether each album has each tag based on PMI values and auto-encoding.
 import numpy as np
 import pandas as pd
+import copy
 
 # Converts dictionaries to labeled matrices, using pandas's DataFrame class.
 def convert_to_matrix(album_tag_dict):
@@ -8,7 +9,7 @@ def convert_to_matrix(album_tag_dict):
 
 # Generates matrix of NPMI values from matrix of counts.
 def convert_to_npmi(count_matrix):
-  npmi_matrix = count_matrix
+  npmi_matrix = copy.copy(count_matrix)
   
   for row in range(len(count_matrix.values)):
     for col in range(len(count_matrix.values[0])):

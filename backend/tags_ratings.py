@@ -50,7 +50,7 @@ except mysql.connector.Error as err:
 
 for name, ddl in TABLES.iteritems():
     try:
-        print "Creating table {}: ".format(name), end=''
+        print "Creating table {}: ".format(name)
         cursor.execute(ddl)
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:

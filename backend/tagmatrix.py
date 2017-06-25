@@ -10,8 +10,8 @@ def convert_to_matrix(album_tag_dict):
 def convert_to_npmi(count_matrix):
   npmi_matrix = count_matrix
   
-  for row in count_matrix.values:
-    for col in count_matrix.values:
+  for row in len(count_matrix.values):
+    for col in len(count_matrix.values[0]):
       entry = float(count_matrix.values[row][col])
       if entry == 0:
         npmi_matrix.values[row][col] = -1.0

@@ -27,7 +27,7 @@ TABLES['song_ratings'] = (
   "'rating' int(2) NOT NULL, "
   "PRIMARY KEY ('user')) ")
 
-cnx = mysql.connector.connect(user='squirrel')
+cnx = mysql.connector.connect(user='root', password='Reverie42')
 cursor = cnx.cursor()
 
 def create_database(cursor):

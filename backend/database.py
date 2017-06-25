@@ -134,6 +134,10 @@ def update_album_ratings(user, album, rating):
   data_short = (user, album)
   data_change = (rating, user, album)
   
+  cursor.execute(check_rating_same, data)
+  for item in cursor:
+    same = item[0]
+  print same
   cursor.execute(check_rating_exists, data_short)
   for item in cursor:
     exists = item[0]

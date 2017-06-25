@@ -68,3 +68,5 @@ def find_distance_matrix(count_matrix, encoded_space):
     clf.fit(encoded_space, y)
     distance_matrix[tag] = clf.decision_function(encoded_space)
     break
+    
+  return distance_matrix['0']

@@ -3,6 +3,7 @@ from tagmatrix import convert_to_matrix, convert_to_npmi
 
 update_album_tags('1', '2', '3')
 update_album_tags('9', '2', '3')
+update_album_tags('4', '6', '3')
 update_album_tags('3', '6', '5')
 update_album_ratings('1', '2', 6)
 update_album_ratings('1', '2', 5)

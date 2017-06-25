@@ -67,7 +67,7 @@ cursor.close()
 cnx.close()
 
 # Allows users to update the tags table.
-def update_tags(userid, albumid, tagid):
+def update_tags(user, album, tag):
   cnx = mysql.connector.connect(user='root', password='Reverie42')
   cursor = cnx.cursor()
   cnx.database = DB_NAME
@@ -76,9 +76,45 @@ def update_tags(userid, albumid, tagid):
              "(user, album, tag) "
              "VALUES (%s, %s, %s); ")
   
-  data_tag = (userid, albumid, tagid)
+  data_tag = (user, album, tag)
   
   cursor.execute(add_tag, data_tag)
+  cnx.commit()
+  
+  cursor.close()
+  cnx.close()
+
+# Allows users to update the album ratings table.
+def update_album_ratings(user, album, rating):
+  cnx = mysql.connector.connect(user='root', password='Reverie42')
+  cursor = cnx.cursor()
+  cnx.database = DB_NAME
+  
+  add_album_rating = ("INSERT INTO album_ratings "
+             "(user, album, rating) "
+             "VALUES (%s, %s, %s); ")
+  
+  data_album_rating = (user, album, rating)
+  
+  cursor.execute(add_album_rating, data_album_rating)
+  cnx.commit()
+  
+  cursor.close()
+  cnx.close()
+  
+# Allows users to update the song ratings table.
+def update_song_ratings(user, song, rating):
+  cnx = mysql.connector.connect(user='root', password='Reverie42')
+  cursor = cnx.cursor()
+  cnx.database = DB_NAME
+  
+  add_song_rating = ("INSERT INTO song_ratings "
+             "(user, song, rating) "
+             "VALUES (%s, %s, %s); ")
+  
+  data_song_rating = (user, song, rating)
+  
+  cursor.execute(add_song_rating, data_song_rating)
   cnx.commit()
   
   cursor.close()

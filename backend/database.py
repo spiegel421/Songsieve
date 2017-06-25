@@ -6,6 +6,7 @@ from mysql.connector import errorcode
 DB_NAME = 'tags_ratings'
 
 TABLES = {}
+# Every time a user tags an album, the user, album, and tag are stored.
 TABLES['tags'] = (
   "CREATE TABLE tags( "
   "user varchar(20) NOT NULL, "
@@ -13,6 +14,7 @@ TABLES['tags'] = (
   "tag varchar(20) NOT NULL, "
   "PRIMARY KEY (user)); ")
 
+# Same with rating albums: the user, album, and rating are stored.
 TABLES['album_ratings'] = (
   "CREATE TABLE album_ratings( "
   "user varchar(20) NOT NULL, "
@@ -20,6 +22,7 @@ TABLES['album_ratings'] = (
   "rating int(2) NOT NULL, "
   "PRIMARY KEY (user)); ")
 
+# Same as above, only with songs, not albums.
 TABLES['song_ratings'] = (
   "CREATE TABLE song_ratings( "
   "user varchar(20) NOT NULL, "
@@ -27,6 +30,7 @@ TABLES['song_ratings'] = (
   "rating int(2) NOT NULL, "
   "PRIMARY KEY (user)); ")
 
+# Connects to mysql, defines a method for creating the database, and uses that method.
 cnx = mysql.connector.connect(user='root', password='Reverie42')
 cursor = cnx.cursor()
 

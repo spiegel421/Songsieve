@@ -127,7 +127,7 @@ def update_album_ratings(user, album, rating):
              "VALUES (%s, %s, %s); ")
   
   change_album_rating = ("UPDATE album_ratings "
-                         "SET rating = %s"
+                         "SET rating = %s "
                          "WHERE user = %s AND album = %s; ")
   
   data_short = (user, album)

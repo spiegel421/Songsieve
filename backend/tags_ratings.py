@@ -14,18 +14,18 @@ TABLES['tags'] = (
   "PRIMARY KEY (user)); ")
 
 TABLES['album_ratings'] = (
-  "CREATE TABLE 'album_ratings'( "
-  "'user' varchar(20) NOT NULL, "
-  "'album' varchar(100) NOT NULL, "
-  "'rating' int(2) NOT NULL, "
-  "PRIMARY KEY ('user')); ")
+  "CREATE TABLE album_ratings( "
+  "user varchar(20) NOT NULL, "
+  "album varchar(100) NOT NULL, "
+  "rating int(2) NOT NULL, "
+  "PRIMARY KEY (user)); ")
 
 TABLES['song_ratings'] = (
-  "CREATE TABLE 'song_ratings'( "
-  "'user' varchar(20) NOT NULL, "
-  "'song' varchar(100) NOT NULL, "
-  "'rating' int(2) NOT NULL, "
-  "PRIMARY KEY ('user')); ")
+  "CREATE TABLE song_ratings( "
+  "user varchar(20) NOT NULL, "
+  "song varchar(100) NOT NULL, "
+  "rating int(2) NOT NULL, "
+  "PRIMARY KEY (user)); ")
 
 cnx = mysql.connector.connect(user='root', password='Reverie42')
 cursor = cnx.cursor()

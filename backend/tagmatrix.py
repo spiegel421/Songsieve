@@ -2,5 +2,29 @@
 import numpy as np
 import pandas as pd
 
+# Converts dictionaries to labeled matrices, using pandas's DataFrame class.
 def convert_to_matrix(album_tag_dict):
   return pd.DataFrame(album_tag_dict).T.fillna(0)
+
+# Generates matrix of NPMI values from matrix of counts.
+def convert_to_npmi(count_matrix):
+  npmi_matrix = count_matrix
+  
+  for row in count_matrix:
+    for col in count_matrix:
+      entry = double(count_matrix[row][col])
+      if entry == 0:
+        npmi_matrix[row][col] = -1.0
+        continue
+      else:
+        prob_con = entry / count_matrix.sum()
+        if prob_con == 1.0:
+          npmi_matrix[row][col] = 1.0
+          continue
+        else:
+          prob_row = entry / count_matrix.sum(axis=0)
+          prob_col = entry / count_matrix.sum(axis=1)
+          npmi_value = -1.0 * np.log(prob_con / (prob_row * prob_col)) / np.log(prob_con)
+          npmi_matrix[row][col] = npmi_value
+          
+  return npmi_matrix

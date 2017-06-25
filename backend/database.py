@@ -144,6 +144,7 @@ def update_album_ratings(user, album, rating):
     for item in cursor:
       same = item[0]
     if same == 0:
+      print 'achieved'
       cursor.execute(change_album_rating, data_change)
   
   cursor.close()

@@ -82,3 +82,22 @@ def rank_distance_matrix(distance_matrix):
     ranked_matrix.loc[tag] = [sorted_by_distance[tag].index(album) + 1 for album in distance_matrix.columns]
     
   return ranked_matrix
+
+# Finds normalized discounted cumulative gain (NDCG) for each tag.
+def find_ndcg_values(npmi_matrix, ranked_matrix):
+  ndcg_values = {}
+  rankings_dict = ranked_matrix.to_dict(orient='index')
+  for tag in ranked_matrix.index:
+    dcg = 0.0
+    album_rankings = rankings_dict[tag]
+    for album in album_rankings:
+      dcg += npmi_matrix.loc[album][tag] / (np.log(album_rankings[album] + 1) / np.log(2))
+      
+    idcg = 0.0
+    sorted_relevancies = sorted(npmi_matrix.T.loc[tag], reverse=True)
+    for i in range(len(sorted_relevancies)):
+      idcg += sorted_relevancies[i] / (np.log(i + 2) / np.log(2))
+      
+    ndcg_values[tag] = dcg / idcg
+    
+  return ndcg_values

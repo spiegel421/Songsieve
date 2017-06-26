@@ -61,6 +61,7 @@ def find_distance_matrix(count_matrix, encoded_space):
   distance_matrix = copy.copy(count_matrix).T
   
   clf = svm.LinearSVC()
+  print count_matrix.columns
   for tag in count_matrix.columns:
     y = copy.copy(distance_matrix[tag])
     print len(y)

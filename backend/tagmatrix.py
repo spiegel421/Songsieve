@@ -10,37 +10,37 @@ from sklearn import svm
 def convert_to_matrix(album_tag_dict):
   return pd.DataFrame(album_tag_dict).T.fillna(0)
 
-# Generates matrix of NPMI values from matrix of counts.
-def convert_to_npmi(count_matrix):
+# Generates matrix of PPMI values from matrix of counts.
+def convert_to_ppmi(count_matrix):
   npmi_matrix = copy.copy(count_matrix)
   
   for row in range(len(count_matrix.values)):
     for col in range(len(count_matrix.values[0])):
       entry = float(count_matrix.values[row][col])
       if entry == 0:
-        npmi_matrix.values[row][col] = -1.0
+        ppmi_matrix.values[row][col] = 0.0
         continue
       else:
         prob_con = entry / count_matrix.values.sum()
         if prob_con == 1.0:
-          npmi_matrix.values[row][col] = 1.0
+          ppmi_matrix.values[row][col] = 1.0
           continue
         else:
           prob_row = entry / count_matrix.values.sum(axis=1)[row]
           prob_col = entry / count_matrix.values.sum(axis=0)[col]
-          npmi_value = -1.0 * np.log(prob_con / (prob_row * prob_col)) / np.log(prob_con)
-          npmi_matrix.values[row][col] = npmi_value
+          ppmi_value = 2 ** (np.log(prob_con / (prob_row * prob_col)) + np.log(prob_con))
+          ppmi_matrix.values[row][col] = ppmi_value
           
-  return npmi_matrix
+  return ppmi_matrix
 
-# Auto-encodes NPMI matrix into 20 dimensions, using five-fold cross validation.
-def autoencode(npmi_matrix):
-  original_dim = len(npmi_matrix.values[0])
+# Auto-encodes PPMI matrix into 20 dimensions, using five-fold cross validation.
+def autoencode(ppmi_matrix):
+  original_dim = len(ppmi_matrix.values[0])
   encoding_dim = 20
   
   input = Input(shape=(original_dim,))
-  encoded = Dense(encoding_dim, activation='tanh')(input)
-  decoded = Dense(original_dim, activation='tanh')(encoded)
+  encoded = Dense(encoding_dim, activation='sigmoid')(input)
+  decoded = Dense(original_dim, activation='sigmoid')(encoded)
   
   autoencoder = Model(input, decoded)
   encoder = Model(input, encoded)
@@ -48,12 +48,12 @@ def autoencode(npmi_matrix):
   decoder_layer = autoencoder.layers[-1]
   decoder = Model(encoded_input, decoder_layer(encoded_input))
   
-  X = npmi_matrix.values
+  X = ppmi_matrix.values
   autoencoder.compile(optimizer='sgd', loss='mean_squared_error')
   autoencoder.fit(X, X, validation_split=0.2, 
                   epochs=50, batch_size=10)
   
-  encoded_space = pd.DataFrame(encoder.predict(npmi_matrix.values), index=npmi_matrix.index)
+  encoded_space = pd.DataFrame(encoder.predict(ppmi_matrix.values), index=ppmi_matrix.index)
   return encoded_space
 
 # Determines the distance of each album from each tag's hyperplane.
@@ -84,17 +84,17 @@ def rank_distance_matrix(distance_matrix):
   return ranked_matrix
 
 # Finds normalized discounted cumulative gain (NDCG) for each tag.
-def find_ndcg_values(npmi_matrix, ranked_matrix):
+def find_ndcg_values(ppmi_matrix, ranked_matrix):
   ndcg_values = {}
   rankings_dict = ranked_matrix.to_dict(orient='index')
   for tag in ranked_matrix.index:
     dcg = 0.0
     album_rankings = rankings_dict[tag]
     for album in album_rankings:
-      dcg += npmi_matrix.loc[album][tag] / (np.log(album_rankings[album] + 1) / np.log(2))
+      dcg += ppmi_matrix.loc[album][tag] / (np.log(album_rankings[album] + 1) / np.log(2))
       
     idcg = 0.0
-    sorted_relevancies = sorted(npmi_matrix.T.loc[tag], reverse=True)
+    sorted_relevancies = sorted(ppmi_matrix.T.loc[tag], reverse=True)
     for i in range(len(sorted_relevancies)):
       idcg += sorted_relevancies[i] / (np.log(i + 2) / np.log(2))
       

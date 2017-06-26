@@ -74,3 +74,4 @@ def rank_distance_matrix(distance_matrix):
   sorted_by_distance = {}
   for tag in distance_matrix.index:
     sorted_by_distance[tag] = sorted(distance_matrix.columns, key=lambda column: distance_matrix.loc[tag][column])
+  print sorted_by_distance

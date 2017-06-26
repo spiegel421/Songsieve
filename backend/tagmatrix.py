@@ -13,7 +13,6 @@ def convert_to_matrix(album_tag_dict):
 # Generates matrix of NPMI values from matrix of counts.
 def convert_to_npmi(count_matrix):
   npmi_matrix = copy.copy(count_matrix)
-  print len(count_matrix.values[0])
   
   for row in range(len(count_matrix.values)):
     for col in range(len(count_matrix.values[0])):
@@ -27,9 +26,8 @@ def convert_to_npmi(count_matrix):
           npmi_matrix.values[row][col] = 1.0
           continue
         else:
-          print count_matrix.values.sum(axis=1)
-          prob_row = entry / count_matrix.values.sum(axis=0)[row]
-          prob_col = entry / count_matrix.values.sum(axis=1)[col]
+          prob_row = entry / count_matrix.values.sum(axis=1)[row]
+          prob_col = entry / count_matrix.values.sum(axis=0)[col]
           npmi_value = -1.0 * np.log(prob_con / (prob_row * prob_col)) / np.log(prob_con)
           npmi_matrix.values[row][col] = npmi_value
           
@@ -37,7 +35,7 @@ def convert_to_npmi(count_matrix):
 
 # Auto-encodes NPMI matrix into 20 dimensions, using five-fold cross validation.
 def autoencode(npmi_matrix):
-  original_dim = len(npmi_matrix.values)
+  original_dim = len(npmi_matrix.values[0])
   encoding_dim = 20
   
   input = Input(shape=(original_dim,))

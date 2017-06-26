@@ -64,7 +64,7 @@ def find_distance_matrix(count_matrix, encoded_space):
   for tag in distance_matrix.index:
     y = copy.copy(distance_matrix.loc[[tag]])
     print len(y)
-    y = [item / item if item > 0 else 0 for item in y.values]
+    y = [[item / item if item > 0 else 0 for item in y.values[0]]]
     clf.fit(encoded_space.values, y)
     distance_matrix[tag] = clf.decision_function(encoded_space.values)
     

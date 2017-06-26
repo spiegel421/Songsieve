@@ -1,5 +1,5 @@
-from database import update_album_tags, update_album_ratings, update_song_ratings, read_album_tags
-from tagmatrix import convert_to_matrix, convert_to_npmi, autoencode, find_distance_matrix, rank_distance_matrix
+from database import *
+from tagmatrix import *
 from random import randrange
 
 #for i in range(1000):

@@ -62,10 +62,10 @@ def find_distance_matrix(count_matrix, encoded_space):
   
   clf = svm.LinearSVC()
   for tag in distance_matrix.index:
-    y = copy.copy(distance_matrix.loc[[tag]])
+    y = copy.copy(distance_matrix.loc[tag])
     print len(y)
     y = [1 if item > 0 else 0 for item in y.values[0]]
     clf.fit(encoded_space.values, y)
-    distance_matrix.loc[[tag]] = clf.decision_function(encoded_space.values)
+    distance_matrix.loc[tag] = clf.decision_function(encoded_space.values)
     
   return distance_matrix

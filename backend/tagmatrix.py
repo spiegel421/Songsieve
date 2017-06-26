@@ -73,5 +73,12 @@ def find_distance_matrix(count_matrix, encoded_space):
 def rank_distance_matrix(distance_matrix):
   sorted_by_distance = {}
   for tag in distance_matrix.index:
-    sorted_by_distance[tag] = sorted(distance_matrix.columns, key=lambda column: distance_matrix.loc[tag][column])
-  print sorted_by_distance
+    sorted_by_distance[tag] = sorted(distance_matrix.columns, 
+                                     key=lambda album: distance_matrix.loc[tag][album], 
+                                     reverse=True)
+    
+  ranked_matrix = copy.copy(distance_matrix)
+  for tag in distance_matrix.index:
+    ranked_matrix.loc[tag] = [sorted_by_distance[tag].index(album) + 1 for album in distance_matrix.columns]
+    
+  return ranked_matrix

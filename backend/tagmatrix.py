@@ -38,7 +38,7 @@ def autoencode(npmi_matrix):
   original_dim = len(npmi_matrix.values[0])
   encoding_dim = 20
   
-  input = Input(shape=(20,))
+  input = Input(shape=(original_dim,))
   encoded = Dense(encoding_dim, activation='tanh')(input)
   decoded = Dense(original_dim, activation='tanh')(encoded)
   

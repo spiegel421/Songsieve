@@ -7,4 +7,5 @@ for i in range(1000):
 matrix = convert_to_matrix(read_album_tags())
 npmi_matrix = convert_to_npmi(matrix)
 encoded_space = autoencode(npmi_matrix)
-print find_distance_matrix(matrix, encoded_space)
+distance_matrix = find_distance_matrix(matrix, encoded_space)
+rank_distance_matrix(distance_matrix)

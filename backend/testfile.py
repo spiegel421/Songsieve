@@ -1,4 +1,4 @@
-from database import *
+from tags_ratings import *
 from tagmatrix import *
 from random import randrange
 

@@ -68,3 +68,9 @@ def find_distance_matrix(count_matrix, encoded_space):
     distance_matrix.loc[tag] = clf.decision_function(encoded_space.values)
     
   return distance_matrix
+
+# Ranks albums by distance from each tag's hyperplane.
+def rank_distance_matrix(distance_matrix):
+  sorted_by_distance = {}
+  for tag in distance_matrix.index:
+    sorted_by_distance[tag] = sorted(distance_matrix.columns, key=lambda column: distance_matrix.loc[tag][column])

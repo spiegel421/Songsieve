@@ -12,7 +12,7 @@ def convert_to_matrix(album_tag_dict):
 
 # Generates matrix of PPMI values from matrix of counts.
 def convert_to_ppmi(count_matrix):
-  npmi_matrix = copy.copy(count_matrix)
+  ppmi_matrix = copy.copy(count_matrix)
   
   for row in range(len(count_matrix.values)):
     for col in range(len(count_matrix.values[0])):

@@ -53,7 +53,7 @@ def autoencode(npmi_matrix):
   autoencoder.fit(X, X, validation_split=0.2, 
                   epochs=50, batch_size=10)
   
-  encoded_space = pd.DataFrame(encoder.predict(npmi_matrix.values), index=npmi_matrix.index.values)
+  encoded_space = pd.DataFrame(encoder.predict(npmi_matrix.values), index=npmi_matrix.index)
   return encoded_space
 
 # Determines the distance of each album from each tag's hyperplane.

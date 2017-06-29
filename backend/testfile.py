@@ -10,4 +10,5 @@ encoded_space = autoencode(ppmi_matrix)
 distance_matrix = find_distance_matrix(matrix, encoded_space)
 ranked_matrix = rank_distance_matrix(distance_matrix)
 ndcg_values = find_ndcg_values(ppmi_matrix, ranked_matrix)
-print ndcg_values
+binary_table = find_binary_table(ranked_matrix, 0.90, ndcg_values, 0.50)
+print binary_table
